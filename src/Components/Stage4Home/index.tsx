@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Button, Typography, Box, CardMedia, Card, CardContent } from "@material-ui/core"
+import React, { useState } from 'react';
+import { Grid, Typography, Box, CardMedia, Card, CardContent } from "@material-ui/core"
 import { useStyles, Content } from './styles'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -85,6 +85,7 @@ export function StageFour() {
                                 <CardMedia>
                                     <img
                                         src={suggestions.img}
+                                        alt={suggestions.authorName}
                                         height={250}
                                         width={350}
                                     />

@@ -1,7 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core';
-import { url } from 'inspector';
-import styled from 'styled-components';
-import BGStageOne from '../../Assets/images/Illustration.svg'
+import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
     footer: {

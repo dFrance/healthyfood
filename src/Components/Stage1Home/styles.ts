@@ -1,11 +1,10 @@
 import { Button, makeStyles } from '@material-ui/core';
-import { url } from 'inspector';
 import styled from 'styled-components';
 import BGStageOne from '../../Assets/images/Illustration.svg'
 
 
 export const Content = styled.div`
-    background: url(${BGStageOne})no-repeat right 0;
+    background: url(${BGStageOne}) no-repeat right 0;
     //height: 750px;
     height: 90vh;
     background-size: contain;
@@ -32,7 +31,7 @@ export const ButtonSearch = styled(Button)`
 `;
 
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles({
     img: {
         position: "absolute",
         left: 0,
@@ -58,5 +57,5 @@ container: {
         }
     }
 
-}));
+});
 

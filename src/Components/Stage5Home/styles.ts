@@ -1,5 +1,4 @@
 import { Button, makeStyles } from '@material-ui/core';
-import { url } from 'inspector';
 import styled from 'styled-components';
 import BGStageFive from '../../Assets/images/bloco_final_image.svg'
 

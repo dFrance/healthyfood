@@ -1,6 +1,5 @@
 import { Grid, Box, Typography, TextField } from "@material-ui/core";
 import { useStyles, ButtonSearch, Content } from "./styles";
-import img5 from '../../Assets/images/bloco_final_image.svg'
 
 export function StageFive() {
     const classes = useStyles();

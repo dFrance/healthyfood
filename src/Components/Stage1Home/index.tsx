@@ -1,17 +1,15 @@
-import { Box, Grid, TextField, Typography, Button } from "@material-ui/core"
+import { Box, Grid, TextField, Typography} from "@material-ui/core"
 import { Header } from "../Header"
 import { useStyles, Content, ButtonSearch } from "./styles";
 import SearchIcon from '@material-ui/icons/Search';
-import BGStageOne from '../../Assets/images/Illustration.svg'
 
 export function StageOne() {
     const classes = useStyles();
     return (
         <Content>
-            {/* <img src={BGStageOne} className={classes.img} /> */}
             <Grid container className={classes.container}>
                 <Grid item xs={12}>
-                    <Header />
+                    <Header home/>
                 </Grid>
                 <Box>
                     <Grid item xs={6}>

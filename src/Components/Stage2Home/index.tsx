@@ -1,6 +1,5 @@
-import { CardContent, CardMedia, Box, Card, Button, Grid, Typography } from "@material-ui/core";
+import { CardContent, CardMedia, Box, Card, Grid, Typography } from "@material-ui/core";
 import { useStyles, Content, ButtonSearch } from "./styles";
-import { Recipes } from '../Recipes'
 import img1 from '../../Assets/images/comida_1.svg'
 import img2 from '../../Assets/images/comida_2.svg'
 import img3 from '../../Assets/images/comida_3.svg'

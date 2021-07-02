@@ -1,26 +1,6 @@
-import { Button, makeStyles } from '@material-ui/core';
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core';
 
-export const ButtonNav = styled(Button)`
-    color: #FFF;
-    font-family: muli, sans-serif;
-    font-weight: 700;
-    font-style: normal;
-`;
-
-export const ButtonFill = styled(Button)`
-    background-color: #FFF;
-    color: #BADC58;
-    font-family: muli, sans-serif;
-    font-weight: 700;
-    font-style: normal;
-
-    &:hover {
-        color: #FFF;
-    }
-`;
-
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
     header: {
         display: "flex",
     },
@@ -31,13 +11,14 @@ export const useStyles = makeStyles((theme) => ({
     },
     logo: {
         color: "#BADC58",
-        fontFamily: 'Montserrat, ' + 'sans-serif',
+        fontFamily: 'Montserrat, sans-serif',
         fontWeight: 600,
         fontSize: 32,
+        textDecoration: "none",
     },
     buttons: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: 32,
+        gap: 24,
     }
 }));

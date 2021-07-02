@@ -1,8 +1,6 @@
 import { Grid, Box, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
 import {Link} from 'react-router-dom'
-import img5 from '../../Assets/images/bloco_final_image.svg'
-
 export function Footer() {
     const classes = useStyles();
     return (
