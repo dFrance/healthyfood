@@ -1,9 +1,18 @@
 import React, { useState, FormEvent } from 'react';
+import ptLocale from "date-fns/locale/pt";
 import { TextField, Typography, Grid, Box } from '@material-ui/core'
 import { ButtonNav } from '../Atoms/Buttons/styles'
 import { Content } from './styles'
 import { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
+import InputMask from 'react-input-mask';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 
 type ConsultaCepProps = {
     state: string;
@@ -15,86 +24,119 @@ type ConsultaCepProps = {
 export function Form() {
     //const [submit, setSubmit] = useState();
     const [name, setName] = useState('');
-    const [birthday, setBirthday] = useState('');
+    const [birthday, setBirthday] = useState(new Date());
     const [cpf, setCpf] = useState('');
     const [cep, setCep] = useState('');
     const [number, setNumber] = useState('');
     const [complement, setComplement] = useState('');
     const users = localStorage.getItem("Usuário");
-    const [messageError, setMessageError] = useState(false);
+    const [messageErrorCep, setMessageErrorCep] = useState(false);
+    const [messageErrorCpf, setMessageErrorCpf] = useState(false);
+    const [messageErrorBirth, setMessageErrorBirth] = useState(false);
     const [useCep, setUseCep] = useState<ConsultaCepProps>();
-    const [address, setAddress] = useState(false)
+
 
     interface NumberFormatCustomProps {
         inputRef: (instance: NumberFormat | null) => void;
         onChange: (event: { target: { name: string; value: string } }) => void;
         name: string;
-      }
+    }
 
     function NumberFormatCustom(props: NumberFormatCustomProps) {
         const { inputRef, onChange, ...other } = props;
 
         return (
             <NumberFormat
-              {...other}
-              getInputRef={inputRef}
-              onValueChange={(values) => {
-                onChange({
-                  target: {
-                    name: props.name,
-                    value: values.value,
-                  },
-                });
-              }}
-              isNumericString
-              format="#####-###"
+                {...other}
+                getInputRef={inputRef}
+                onValueChange={(values) => {
+                    onChange({
+                        target: {
+                            name: props.name,
+                            value: values.value,
+                        },
+                    });
+                }}
+                isNumericString
+                format="#####-###"
             />)
     }
 
+    function handleBirthdayChange(date: any) {
+        if (date == "Invalid Date") {
+            console.log("Opa")
+            setMessageErrorBirth(true)
+        } else {
+            setMessageErrorBirth(false)
+        }
+        setBirthday(date)
+    }
 
     // Funções do CEP
 
-    function handleChangeCep(event: any) {
-        setCep(event.target.value)
-    }
-
     useEffect(() => {
         validateCep()
+        console.log(cep)
     }, [cep]);
 
 
     async function validateCep() {
-        if (cep.length == 8) {
-            const consultaCep = await (await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`)).json()
-            if (consultaCep.errors) {
-                setMessageError(true)
-                setAddress(false)
-                setUseCep(undefined)
-            } else {
-                console.log(consultaCep)
-                setMessageError(false)
-                setAddress(true)
-                setUseCep(consultaCep)
+        const cepNumbers = cep.replace(/\D/g, "");
+        if (cepNumbers.length === 0) {
+            setMessageErrorCep(false)
+            setUseCep(undefined)
+        } else {
+            if (cepNumbers.length === 8) {
+                const consultaCep = await (await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`)).json()
+                if (consultaCep.errors) {
+                    setMessageErrorCep(true)
+                    setUseCep(undefined)
+                } else {
+                    console.log(consultaCep)
+                    setMessageErrorCep(false)
+                    setUseCep(consultaCep)
+                }
             }
         }
     }
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
+        const cepNumbers = cep.replace(/\D/g, "");
+        const cpfNumbers = cpf.replace(/\D/g, "");
+        if (cepNumbers.length < 8 || useCep == undefined) {
+            setMessageErrorCep(true)
+            return
 
+        }
+
+        if (cpfNumbers.length < 11) {
+            setMessageErrorCpf(true)
+            return
+        }
         const user = {
-            name: name,
-            birthday: birthday,
-            CPF: cpf,
-            CEP: cep,
+            "Nome": name,
+            "Data de nascimento": birthday,
+            "CPF": cpf,
+            "CEP": cep,
+            "Endereço": {
+                "Estado": useCep?.state,
+                "Cidade": useCep?.city,
+                "Bairro": useCep?.neighborhood,
+                "Rua": useCep?.street,
+                "Numero": number,
+                "Complemento": complement,
+            }
         }
 
         localStorage.setItem('Usuário', JSON.stringify(user));
+        console.log(users)
+
 
     }
     useEffect(() => {
         console.log(users)
-    }, [localStorage])
+    }, [])
     return (
         <Content>
             <form onSubmit={handleSubmit} style={{ maxWidth: 600 }}>
@@ -106,25 +148,57 @@ export function Form() {
                         <TextField value={name} onChange={event => setName(event.target.value)} required fullWidth variant="outlined" placeholder="Digite seu nome" />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField value={birthday} type="date" onChange={event => setBirthday(event.target.value)} required fullWidth variant="outlined" placeholder="Digite sua data de nascimento" />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <TextField value={cpf} type="number" onChange={event => setCpf(event.target.value)} required fullWidth variant="outlined" placeholder="Digite seu CPF" />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <TextField
-                            required 
-                            fullWidth 
-                            value={cep} 
-                            variant="outlined" 
-                            error={messageError}
-                            placeholder="Digite seu CEP" 
-                            helperText={messageError && "CEP inválido"}
-                            onChange={handleChangeCep} 
-                            InputProps={{
-                                inputComponent: NumberFormatCustom as any,
-                            }}
+                        {/* <TextField value={birthday} type="date" onChange={event => setBirthday(event.target.value)} required fullWidth variant="outlined" placeholder="Digite sua data de nascimento" /> */}
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+                            <KeyboardDatePicker
+                                style={{ width: "100%" }}
+                                autoOk
+                                disableToolbar
+                                inputVariant="outlined"
+                                format="dd/MM/yyyy"
+                                label="Data de nascimento"
+                                error={messageErrorBirth}
+                                helperText={messageErrorBirth && "Formato inválido"}
+                                value={birthday}
+                                onChange={handleBirthdayChange}
                             />
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <InputMask
+                            value={cpf}
+                            mask="999.999.999-99"
+                            onChange={event => setCpf(event.target.value)}
+                        >
+                            {() => (
+                                <TextField
+                                    required fullWidth variant="outlined"
+                                    placeholder="Digite seu CPF"
+                                    error={messageErrorCpf}
+                                    helperText={messageErrorCpf && "CPF inválido"}
+                                />
+                            )}
+                        </InputMask>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <InputMask
+                            mask="99999-999"
+                            value={cep}
+                            onChange={event => setCep(event.target.value)}
+                        >
+                            {
+                                () => (
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        variant="outlined"
+                                        placeholder="Digite seu CEP"
+                                        error={messageErrorCep}
+                                        helperText={messageErrorCep && "CEP inválido"}
+                                    />
+                                )
+                            }
+                        </InputMask>
                     </Grid>
                     {useCep &&
                         <>
