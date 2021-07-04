@@ -7,6 +7,7 @@ type ButtonProps = {
     hover?: string;
     full?: boolean;
 }
+
 export const ButtonNav = styled(Button) <ButtonProps>`
     font-family: muli, sans-serif;
     font-weight: 700;
