@@ -12,6 +12,7 @@ import {
     KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { cpf } from 'cpf-cnpj-validator';
 
 
 type ConsultaCepProps = {
@@ -25,7 +26,7 @@ export function Form() {
     //const [submit, setSubmit] = useState();
     const [name, setName] = useState('');
     const [birthday, setBirthday] = useState(new Date());
-    const [cpf, setCpf] = useState('');
+    const [inputCpf, setInputCpf] = useState('');
     const [cep, setCep] = useState('');
     const [number, setNumber] = useState('');
     const [complement, setComplement] = useState('');
@@ -34,7 +35,6 @@ export function Form() {
     const [messageErrorCpf, setMessageErrorCpf] = useState(false);
     const [messageErrorBirth, setMessageErrorBirth] = useState(false);
     const [useCep, setUseCep] = useState<ConsultaCepProps>();
-
 
     interface NumberFormatCustomProps {
         inputRef: (instance: NumberFormat | null) => void;
@@ -103,34 +103,39 @@ export function Form() {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
         const cepNumbers = cep.replace(/\D/g, "");
-        const cpfNumbers = cpf.replace(/\D/g, "");
+        const cpfNumbers = inputCpf.replace(/\D/g, "");
+        const validatorCPF = cpf.isValid(cpfNumbers);
+
         if (cepNumbers.length < 8 || useCep == undefined) {
             setMessageErrorCep(true)
             return
 
         }
 
-        if (cpfNumbers.length < 11) {
-            setMessageErrorCpf(true)
-            return
-        }
-        const user = {
-            "Nome": name,
-            "Data de nascimento": birthday,
-            "CPF": cpf,
-            "CEP": cep,
-            "Endereço": {
-                "Estado": useCep?.state,
-                "Cidade": useCep?.city,
-                "Bairro": useCep?.neighborhood,
-                "Rua": useCep?.street,
-                "Numero": number,
-                "Complemento": complement,
+        if (validatorCPF === true) {
+            setMessageErrorCpf(false)
+            console.log(validatorCPF)
+            
+            const user = {
+                "Nome": name,
+                "Data de nascimento": birthday,
+                "CPF": inputCpf,
+                "CEP": cep,
+                "Endereço": {
+                    "Estado": useCep?.state,
+                    "Cidade": useCep?.city,
+                    "Bairro": useCep?.neighborhood,
+                    "Rua": useCep?.street,
+                    "Numero": number,
+                    "Complemento": complement,
+                }
             }
+            
+            localStorage.setItem('Usuário', JSON.stringify(user));
+            console.log(users)
+        } else {
+            setMessageErrorCpf(true)
         }
-
-        localStorage.setItem('Usuário', JSON.stringify(user));
-        console.log(users)
 
 
     }
@@ -166,9 +171,9 @@ export function Form() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <InputMask
-                            value={cpf}
+                            value={inputCpf}
                             mask="999.999.999-99"
-                            onChange={event => setCpf(event.target.value)}
+                            onChange={event => setInputCpf(event.target.value)}
                         >
                             {() => (
                                 <TextField
