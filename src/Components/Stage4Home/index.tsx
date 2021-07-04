@@ -48,17 +48,17 @@ export function StageFour() {
 
         responsive: [
             {
-                breakpoint: 960,
+                breakpoint: 1300,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
                 },
             },
             {
-                breakpoint: 480,
+                breakpoint: 850,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
                 },
             },
         ],
@@ -92,7 +92,7 @@ export function StageFour() {
                                 </CardMedia>
                                 <CardContent>
                                     <Box width={300} alignItems="center" className="card-body">
-                                        <Typography variant="h4" align="justify" className="card-text text-sm-center text-muted">
+                                        <Typography variant="h4" align="left" className="card-text text-sm-center text-muted">
                                             {suggestions.title}
                                         </Typography>
                                         <br />

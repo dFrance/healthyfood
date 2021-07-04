@@ -8,7 +8,7 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     /* height: 900px; */
-    padding: 80px 0 120px;
+    padding: 80px 0 20px;
     background-color: #FAFAFC;
     
 `;

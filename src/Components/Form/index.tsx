@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import ptLocale from "date-fns/locale/pt";
-import { TextField, Typography, Grid, Box } from '@material-ui/core'
+import { TextField, Typography, Grid, Box, Hidden } from '@material-ui/core'
 import { ButtonNav } from '../Atoms/Buttons/styles'
 import { Content } from './styles'
 import { useEffect } from 'react';
@@ -145,9 +145,16 @@ export function Form() {
     return (
         <Content>
             <form onSubmit={handleSubmit} style={{ maxWidth: 600 }}>
+                <Hidden smDown>
                 <Box pb={5}>
-                    <Typography variant="h4">Para se cadastrar preencha os dados a seguir.</Typography>
+                    <Typography variant="h4">Create account</Typography>
                 </Box>
+                </Hidden>
+                <Hidden mdUp>
+                <Box pb={5} pt={7}>
+                    <Typography variant="h4">Create account</Typography>
+                </Box>
+                </Hidden>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
                         <TextField value={name} onChange={event => setName(event.target.value)} required fullWidth variant="outlined" placeholder="Digite seu nome" />
@@ -240,7 +247,7 @@ export function Form() {
                         </>
                     }
                     <Box flex={1} display="flex" justifyContent="center">
-                        <ButtonNav type="submit" fill="#BADC58" hover="#BADC58" full>Se cadastrar</ButtonNav>
+                        <ButtonNav type="submit" fill="#BADC58" hover="#BADC58" full>Create account</ButtonNav>
                     </Box>
                 </Grid>
             </form>

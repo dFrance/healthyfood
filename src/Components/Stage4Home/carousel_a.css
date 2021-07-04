@@ -3,6 +3,29 @@
     color: black !important;
 }
 
+@media (max-width: 850px) {
+
+    .slick-prev {
+        left: 5% !important;
+        z-index: 900;
+    }
+    .slick-next {
+        right: 5% !important;
+        z-index: 900;
+    }
+}
+@media (min-width: 851px) and (max-width:1300px) {
+
+    .slick-prev {
+        left: 2% !important;
+        z-index: 900;
+    }
+    .slick-next {
+        right: 2% !important;
+        z-index: 900;
+    }
+}
+
 
 .follow{
     background-color: #3897f0 !important;

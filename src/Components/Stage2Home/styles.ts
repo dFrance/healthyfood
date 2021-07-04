@@ -4,8 +4,8 @@ import styled from 'styled-components';
 export const Content = styled.div`
     justify-content: center;
     display: flex;
-    height: 750px;
-    padding: 80px 0 120px;
+    height: auto;
+    padding: 80px 20px 120px;
     background-color: #FAFAFC;
     
 `;

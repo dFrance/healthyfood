@@ -8,6 +8,9 @@ export const useStyles = makeStyles(() => ({
         height: 103,
         alignItems: "center",
         maxWidth: 1200,
+        position: 'absolute',
+        top:0,
+        width:'100%',
     },
     logo: {
         color: "#BADC58",
@@ -20,5 +23,6 @@ export const useStyles = makeStyles(() => ({
         display: "flex",
         justifyContent: "flex-end",
         gap: 24,
+        paddingRight: 32,
     }
 }));

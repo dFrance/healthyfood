@@ -11,11 +11,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Route exact path="/">
+          <Header numberPage={0} 
+          home />
           <HomePage />
           <Footer />
         </Route>
         <Route exact path="/register">
-          <Header />
+          <Header numberPage={4} 
+          />
           <Register />
           <Footer />
         </Route>

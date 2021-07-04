@@ -2,17 +2,22 @@ import { Button, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 import BGStageOne from '../../Assets/images/Illustration.svg'
 
+type ContentProps = {
+    smallBg?: boolean;
+}
 
-export const Content = styled.div`
-    background: url(${BGStageOne}) no-repeat right 0;
+export const Content = styled.div<ContentProps>`
+    background: url(${BGStageOne}) no-repeat ${props => props.smallBg ? '120%' : 'right'} 0;
     //height: 750px;
-    height: 90vh;
+    max-height: ${props => props.smallBg ? '70vh' : '90vh'};
+    min-height: ${props => props.smallBg ? '40vh' : '60vh'};
     background-size: contain;
     right: 0;
     left: 0;
     flex:1;
     justify-content: center;
     display: flex;
+    align-items: center;
     
 `;
 
