@@ -25,6 +25,7 @@ type ConsultaCepProps = {
 export function Form() {
     //const [submit, setSubmit] = useState();
     const [name, setName] = useState('');
+    const [success, setSuccess] = useState(false)
     const [birthday, setBirthday] = useState(new Date());
     const [inputCpf, setInputCpf] = useState('');
     const [cep, setCep] = useState('');
@@ -128,6 +129,7 @@ export function Form() {
             }
             
             localStorage.setItem('Usuário', JSON.stringify(user));
+            setSuccess(true)
             console.log(users)
         } else {
             setMessageErrorCpf(true)
@@ -242,7 +244,8 @@ export function Form() {
                             </Grid>
                         </>
                     }
-                    <Box flex={1} display="flex" justifyContent="center">
+                    <Box flex={1} display="flex" justifyContent="center" style={{gap: 16}}>
+                        {success && <Typography variant="h4">Congrats, you created an account!</Typography>}
                         <ButtonNav type="submit" fill="#BADC58" hover="#BADC58" full>Create account</ButtonNav>
                     </Box>
                 </Grid>
