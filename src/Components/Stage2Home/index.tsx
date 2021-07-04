@@ -25,7 +25,6 @@ export function StageTwo() {
             title: 'Cherry Cobbler on the Grill',
         },]
 
-    console.log(recipesInfo[0].img)
     return (
         <Content>
             <Grid container className={classes.container} spacing={5}>

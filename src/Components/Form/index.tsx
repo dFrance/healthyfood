@@ -64,7 +64,6 @@ export function Form() {
 
     function handleBirthdayChange(date: any) {
         if (date == "Invalid Date") {
-            console.log("Opa")
             setMessageErrorBirth(true)
         } else {
             setMessageErrorBirth(false)
@@ -76,7 +75,6 @@ export function Form() {
 
     useEffect(() => {
         validateCep()
-        console.log(cep)
     }, [cep]);
 
 
@@ -92,7 +90,6 @@ export function Form() {
                     setMessageErrorCep(true)
                     setUseCep(undefined)
                 } else {
-                    console.log(consultaCep)
                     setMessageErrorCep(false)
                     setUseCep(consultaCep)
                 }
@@ -114,7 +111,6 @@ export function Form() {
 
         if (validatorCPF === true) {
             setMessageErrorCpf(false)
-            console.log(validatorCPF)
             
             const user = {
                 "Nome": name,
